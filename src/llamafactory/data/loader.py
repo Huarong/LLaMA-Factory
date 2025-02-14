@@ -265,8 +265,10 @@ def _get_preprocessed_dataset(
 
     if training_args.should_log:
         try:
-            print("eval example:" if is_eval else "training example:")
-            dataset_processor.print_data_example(next(iter(dataset)))
+            dataset_iter = iter(dataset)
+            for i in range(200):
+                print(f"eval example {i+1}:" if is_eval else f"training example {i+1}:")
+                print_function(next(dataset_iter))
         except StopIteration:
             if stage == "pt":
                 raise RuntimeError("Cannot find sufficient samples, consider increasing dataset size.")
